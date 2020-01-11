@@ -8,6 +8,7 @@ import wave
 import re
 import logging
 import random
+from tqdm import tqdm
 from collections import defaultdict, Counter
 from textgrid import TextGrid, IntervalTier
 
@@ -276,8 +277,8 @@ class Corpus(object):
         self.speaker_ordering = {}
         self.tg_count = 0
         self.lab_count = 0
-        for root, dirs, files in os.walk(self.directory, followlinks=True):
-            for f in sorted(files):
+        for root, dirs, files in tqdm(os.walk(self.directory, followlinks=True)):
+            for f in tqdm(sorted(files), leave=False):
                 file_name, ext = os.path.splitext(f)
                 if ext.lower() != '.wav':
                     if ext.lower() in ['.lab', '.textgrid']:
